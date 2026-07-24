@@ -28,8 +28,14 @@ export default class DynamicContentCommands {
         const name = key.id;
 
         if (name.includes('dynamicContent')) {
+          const editor = map.get(key);
+
+          if (editor && typeof editor.updateSourceElement === 'function') {
+            editor.updateSourceElement();
+          }
+
           logger.debug(`Destroying Dynamic Content editor: ${name}`);
-          map.get(key).destroy(); // eslint-disable-next-line no-undef
+          editor.destroy(); // eslint-disable-next-line no-undef
 
           ckEditors.delete(key);
         }
